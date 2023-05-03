@@ -23,14 +23,15 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="index.php">Job and career</a></li>
         <li><a href="index.php">Food</a></li>
-        <li><a href="input.html">Contact</a></li>
+        <li><a href="insert.html">Insert</a></li>
+        <li><a href="administrator.php">Administrator</a></li>
       </ul>
     </nav>
 
   </header>
 
   <main>
-    <form name="input" action="script.php" method="POST">
+    <form enctype="multipart/form-data" name="input" action="script.php" method="POST">
       <label for="title">Title:</label>
       <input type="text" name="title" id="title">
       </br>
@@ -45,9 +46,9 @@
 
       <label for="category">Category:</label>
       <select name="category" id="category">
-        <option value="politika">Politika</option>
-        <option value="sport">Sport</option>
-        <option value="zabava">Zabava</option>
+        <option value="Politics">Politics</option>
+        <option value="Job and career">Job and career</option>
+        <option value="Food">Food</option>
       </select>
       </br>
 
@@ -55,11 +56,11 @@
       <input type="file" name="picture" id="picture">
       </br>
 
-      <label for="date">Date:</label>
-      <input type="text" name="date" id="date">
-      </br>
+      <label for="date">Enter a date:</label>
+      <input type="date" id="date" name="date">
+      <br><br>
 
-      <label for="checkbox">Prikazati obavijest na stranici?</label>
+      <label for="checkbox">Archive?</label>
       <input type="checkbox" name="checkbox" id="checkbox">
       </br>
 
