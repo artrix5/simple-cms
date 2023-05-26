@@ -19,13 +19,14 @@
         <h1>WELT</h1>
 
         <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php">Job and career</a></li>
-                <li><a href="index.php">Food</a></li>
-                <li><a href="insert.html">Insert</a></li>
-                <li><a href="administrator.php">Administrator</a></li>
-            </ul>
+
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="category.php?category=politics">Politics</a></li>
+            <li><a href="category.php?category=food">Food</a></li>
+            <li><a href="login.php">Administrator</a></li>
+        </ul>
+
         </nav>
 
     </header>

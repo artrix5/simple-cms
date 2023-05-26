@@ -1,10 +1,102 @@
+/* Dropdown Button */
+/* Dropdown Button */
+.dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.right {
+    text-align: right;
+    float: right;
+}
+
+.section_login {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.image-login {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container-left {
+    width: 50%;
+    position: relative;
+    background-color: red;
+}
+
+.container-right {
+    width: 50%;
+    display: flex;
+    background-color: yellow;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-register {
+    position: absolute;
+    z-index: 2;
+    bottom: 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    left: 500px;
+}
+
+
+
 body {
     margin: 0 auto;
     padding: 0;
     width: 80%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-direction: column;
     background-color: rgb(249, 249, 248);
 }
 
@@ -13,6 +105,20 @@ header {
     background-color: rgb(0, 58, 90);
     align-items: flex-start;
 }
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    color: white;
+}
+
+.align-right {
+    margin-left: auto;
+}
+
+
 
 nav {
     background-color: rgb(6, 75, 113);
@@ -121,6 +227,7 @@ h2 {
     margin: 0px 0px 0px 0px;
 }
 
+
 .test {
     width: 100%;
     height: 1000px;
@@ -132,6 +239,8 @@ h2 {
     box-sizing: border-box;
     background-color: white;
 }
+
+
 
 @media (max-width: 800px) {
     section {

@@ -10,7 +10,7 @@
     <meta name="keywords" content="HTML, CSS, PHP">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    
+
 </head>
 
 <body>
@@ -20,13 +20,12 @@
         <h1>WELT</h1>
 
         <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php">Job and career</a></li>
-                <li><a href="index.php">Food</a></li>
-                <li><a href="insert.html">Insert</a></li>
-                <li><a href="administrator.php">Administrator</a></li>
-            </ul>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="category.php?category=politics">Politics</a></li>
+            <li><a href="category.php?category=food">Food</a></li>
+            <li><a href="login.php">Administrator</a></li>
+        </ul>
         </nav>
 
     </header>
@@ -35,8 +34,8 @@
     include 'connect.php';
     define('UPLPATH', 'img/');
 
-     // Get the article ID from the query parameter
-     if (isset($_GET['id'])) {
+    // Get the article ID from the query parameter
+    if (isset($_GET['id'])) {
         $id = $_GET['id'];
         // rest of your code for displaying the article with the given ID
     } else {
@@ -54,7 +53,7 @@
         $row = mysqli_fetch_assoc($result);
 
         // Display the article details
-        echo "<h2>".$row["category"]. "</h2>";
+        echo "<h2>" . $row["category"] . "</h2>";
         echo "<div class='test'>";
         echo "<h2>" . $row["title"] . "</h2>";
         echo "<p>Date: " . $row["date_published"] . "</p>";
@@ -63,12 +62,12 @@
     } else {
         echo "Article not found.";
     }
-        echo "</div>";
+    echo "</div>";
 
 
     // Close the database connection
     mysqli_close($dbc);
-    
+
     ?>
 
     <footer>
