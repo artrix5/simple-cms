@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
@@ -9,77 +8,143 @@
   <meta name="author" content="Adrian Lokner Lađević">
   <meta name="keywords" content="HTML, CSS, PHP">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="basic-styles.css">
+  <link rel="stylesheet" href="class-styles.css">
+  <style>
+    .container-insert {
+      display: flex;
+      width: 100%;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      flex: 1;
+      padding: 20px;
+    }
+
+    form {
+      width: 100%;
+      margin: 0 auto;
+      background-color: #f4f4f4;
+      border-radius: 5px;
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    .form-container h2 {
+      margin-top: 0;
+    }
+
+    .form-container input[type="text"],
+    .form-container textarea,
+    .form-container select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 4px;
+      resize: vertical;
+      background-color: #f9f9f9;
+    }
+
+    .form-container input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .navigation-bar {
+      flex: 0 0 200px;
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+
+    }
+
+    .navigation-bar ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .navigation-bar ul li {
+      display: block;
+      /* Add this line to make each list item appear as a block element */
+      margin-bottom: 10px;
+    }
+
+    .navigation-bar ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
-
   <header>
-
     <h1>WELT</h1>
-
     <nav>
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="category.php?category=politics">Politics</a></li>
-            <li><a href="category.php?category=food">Food</a></li>
-            <li><a href="login.php">Administrator</a></li>
-        </ul>
+      <ul class="ul">
+
+        <li><a href="index.php">Home</a></li>
+        <li><a href="category.php?category=politics">Politics</a></li>
+        <li><a href="category.php?category=food">Food</a></li>
+        <li><a href="login.php">Administrator</a></li>
+      </ul>
     </nav>
-
   </header>
+  <section>
+    <div class="container-insert">
+      <div class="form-container">
+        <form enctype="multipart/form-data" name="input" action="script.php" method="POST">
+          <h2>Create Post</h2>
 
-  <main>
-    <form enctype="multipart/form-data" name="input" action="script.php" method="POST">
-      <label for="title">Title:</label>
-      <input type="text" name="title" id="title">
-      <span id="errorTitle" class="error"></span>
-      </br>
+          <label for="title">Title:</label>
+          <input type="text" name="title" id="title" placeholder="Enter a title" required>
 
-      <label for="summary">Summary:</label>
-      <textarea name="summary" id="summary"></textarea>
-      <span id="errorSummary" class="error"></span>
-      </br>
+          <label for="summary">Summary:</label>
+          <textarea name="summary" id="summary" placeholder="Enter a summary" required></textarea>
 
-      <label for="text">Text:</label>
-      <textarea name="text" id="text"></textarea>
-      <span id="errorText" class="error"></span>
-      </br>
+          <label for="text">Text:</label>
+          <textarea name="text" id="text" placeholder="Enter the text" required></textarea>
 
-      <label for="category">Category:</label>
-      <select name="category" id="category">
-        <option value="Politics">Politics</option>
-        <option value="Job and career">Job and career</option>
-        <option value="Food">Food</option>
-      </select>
-      <span id="errorCategory" class="error"></span>
-      </br>
+          <label for="category">Category:</label>
+          <select name="category" id="category" required>
+            <option value="">Select a category</option>
+            <option value="Politics">Politics</option>
+            <option value="Job and career">Job and career</option>
+            <option value="Food">Food</option>
+          </select>
 
-      <label for="picture">Picture:</label>
-      <input type="file" name="picture" id="picture">
-      <span id="errorPicture" class="error"></span>
-      </br>
+          <label for="picture">Picture:</label>
+          <input type="file" name="picture" id="picture" required>
 
-      <label for="date">Enter a date:</label>
-      <input type="date" id="date" name="date">
-      <br><br>
+          <label for="date">Enter a date:</label>
+          <input type="date" id="date" name="date">
 
-      <label for="checkbox">Archive?</label>
-      <input type="checkbox" name="checkbox" id="checkbox">
-      </br>
+          <label for="checkbox">Archive?</label>
+          <input type="checkbox" name="checkbox" id="checkbox">
 
-      <button type="submit" id="submit">Send</button>
-      </br>
-
-    </form>
-  </main>
-
+          <input type="submit" id="submit" value="Send">
+        </form>
+      </div>
+      <div class="navigation-bar">
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Clients</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
   <footer>
-
     <h1>WELT</h1>
-
   </footer>
-
   <script type="text/javascript">
 
     document.getElementById("submit").onclick = function (event) {

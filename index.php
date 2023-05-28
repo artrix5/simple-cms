@@ -9,29 +9,31 @@
     <meta name="author" content="Adrian Lokner Lađević">
     <meta name="keywords" content="HTML, CSS, PHP">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="basic-styles.css">
+    <link rel="stylesheet" href="class-styles.css">
 </head>
 
 <body>
 
     <header>
 
-    <div class="title-container">
-    <h1>WELT</h1>
-    <h2 class="align-right"><a href="login.php">Login</a></h2>
-  </div>
+        <div class="title-container">
+            <h1>WELT</h1>
+        </div>
         <nav>
-            <ul>
+            <ul class="ul">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
                 <li><a href="category.php?category=food">Food</a></li>
                 <li><a href="login.php">Administrator</a></li>
+                <li><a href="insert.php">Insert</a></li>
+                <li><a href="administrator.php">Admin</a></li>
             </ul>
         </nav>
 
     </header>
 
-    <h2>POLITICS</h2>
+    <h2 class="title">POLITICS</h2>
     <section>
         <?php
         include 'connect.php';
@@ -48,7 +50,9 @@
             $current_category = "";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<article>";
+                echo "<div class=\"image-container\">";
                 echo '<img src="' . UPLPATH . $row['picture'] . '">';
+                echo "</div>";
                 echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
                 echo "<p>" . $row["summary"] . "</p>";
                 echo "<p>Date: " . $row["date_published"] . "</p>";
@@ -64,7 +68,7 @@
         ?>
     </section>
 
-    <h2>FOOD</h2>
+    <h2 class="title">FOOD</h2>
     <section>
         <?php
         include 'connect.php';
@@ -80,7 +84,9 @@
             $current_category = "";
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<article>";
+                echo "<div class=\"image-container\">";
                 echo '<img src="' . UPLPATH . $row['picture'] . '">';
+                echo "</div>";
                 echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
                 echo "<p>" . $row["summary"] . "</p>";
                 echo "<p>Date: " . $row["date_published"] . "</p>";

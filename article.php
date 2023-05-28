@@ -9,7 +9,8 @@
     <meta name="author" content="Adrian Lokner Lađević">
     <meta name="keywords" content="HTML, CSS, PHP">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="basic-styles.css">
+    <link rel="stylesheet" href="class-styles.css">
 
 </head>
 
@@ -20,12 +21,13 @@
         <h1>WELT</h1>
 
         <nav>
-        <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="category.php?category=politics">Politics</a></li>
-            <li><a href="category.php?category=food">Food</a></li>
-            <li><a href="login.php">Administrator</a></li>
-        </ul>
+            <ul class="ul">
+
+                <li><a href="index.php">Home</a></li>
+                <li><a href="category.php?category=politics">Politics</a></li>
+                <li><a href="category.php?category=food">Food</a></li>
+                <li><a href="login.php">Administrator</a></li>
+            </ul>
         </nav>
 
     </header>
@@ -53,17 +55,18 @@
         $row = mysqli_fetch_assoc($result);
 
         // Display the article details
-        echo "<h2>" . $row["category"] . "</h2>";
-        echo "<div class='test'>";
+        echo "<h2>" . strtoupper($row["category"]) . "</h2>";
+        echo "<div class='article-content'>";
         echo "<h2>" . $row["title"] . "</h2>";
         echo "<p>Date: " . $row["date_published"] . "</p>";
+        echo "<div class=\"img-container-article\">";
         echo "<img src='" . UPLPATH . $row["picture"] . "' alt='" . $row["title"] . "'>";
+        echo "</div>";
         echo "<p>" . $row["content"] . "</p>";
     } else {
         echo "Article not found.";
     }
     echo "</div>";
-
 
     // Close the database connection
     mysqli_close($dbc);

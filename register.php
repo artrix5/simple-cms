@@ -21,7 +21,8 @@
             <h2 class="align-right"><a href="login.php">Login</a></h2>
         </div>
         <nav>
-            <ul>
+            <ul class="ul">
+
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
                 <li><a href="category.php?category=food">Food</a></li>
@@ -32,7 +33,7 @@
     </header>
 
 
-    <h1>Login</h1>
+    <h2 class="title">Login</h2>
 
     <section class="section_login">
 
