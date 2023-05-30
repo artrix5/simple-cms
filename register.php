@@ -1,49 +1,41 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <title>WELT</title>
+    <title>WELT - Register</title>
     <meta name="description" content="PWA Project">
     <meta name="author" content="Adrian Lokner Lađević">
     <meta name="keywords" content="HTML, CSS, PHP">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="basic-styles.css">
+    <link rel="stylesheet" href="class-styles.css">
+
 </head>
 
 <body>
-
     <header>
 
-        <div class="title-container">
+        <div class="heading-container">
             <h1>WELT</h1>
-            <h2 class="align-right"><a href="login.php">Login</a></h2>
         </div>
-        <nav>
-            <ul class="ul">
 
+        <nav>
+            <ul class="main-menu-ul">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
                 <li><a href="category.php?category=food">Food</a></li>
                 <li><a href="login.php">Administrator</a></li>
             </ul>
         </nav>
-
     </header>
 
 
-    <h2 class="title">Login</h2>
+    <section>
+        <div>
+            <form method="POST" class="login-form">
+                <h2 class="center">Register</h2>
 
-    <section class="section_login">
-
-        <div class="container-left">
-            <img class="image-login" src="earth.jpg" alt="Image">
-        </div>
-
-
-        <div class="container-right">
-            <form method="POST">
                 <label for="username">Username:</label>
                 <input type="text" name="username" id="username" required><br><br>
 
@@ -54,14 +46,18 @@
                 <input type="password" name="passwordCheck" id="passwordCheck" required><br><br>
 
                 <input type="submit" name="submit" value="Register">
-            </form>
-        </div>
 
+                <p class="center">Already have an account? <a class="login-link" href="login.php">Login here.</a>
+            </p>
+
+            </form>
+
+           
+
+        </div>
     </section>
 
-
     <?php
-
     $servername = "localhost:3306";
     $user = "root";
     $pass = "";
@@ -79,16 +75,17 @@
             $query = "SELECT username FROM users WHERE username = '$username';";
             $result = mysqli_query($dbc, $query) or die("Error");
 
-            if (mysqli_num_rows($result) >= 1)
+            if (mysqli_num_rows($result) >= 1) {
                 echo "Username already exists!";
-            else if ($password != $passwordCheck) {
+            } else if ($password != $passwordCheck) {
                 echo "Passwords do not match!";
             } else {
                 $insertQuery = "INSERT INTO users (username, password, level) VALUES ('$username','$hashPassword', 0);";
                 $result = mysqli_query($dbc, $insertQuery) or die("Error");
 
-                if ($result === true)
+                if ($result === true) {
                     echo "Registration successful!";
+                }
             }
         }
     }
@@ -96,11 +93,8 @@
     ?>
 
     <footer>
-
         <h1>WELT</h1>
-
     </footer>
-
 </body>
 
 </html>

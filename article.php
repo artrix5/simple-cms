@@ -18,10 +18,12 @@
 
     <header>
 
-        <h1>WELT</h1>
+    <div class="heading-container">
+            <h1>WELT</h1>
+        </div>
 
         <nav>
-            <ul class="ul">
+            <ul class="main-menu-ul">
 
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
@@ -31,6 +33,8 @@
         </nav>
 
     </header>
+
+    <div class="background">
 
     <?php
     include 'connect.php';
@@ -55,7 +59,7 @@
         $row = mysqli_fetch_assoc($result);
 
         // Display the article details
-        echo "<h2>" . strtoupper($row["category"]) . "</h2>";
+        echo "<h2 class=\"subheading\">" . strtoupper($row["category"]) . "</h2>";
         echo "<div class='article-content'>";
         echo "<h2>" . $row["title"] . "</h2>";
         echo "<p>Date: " . $row["date_published"] . "</p>";
@@ -72,6 +76,7 @@
     mysqli_close($dbc);
 
     ?>
+    </div>
 
     <footer>
 

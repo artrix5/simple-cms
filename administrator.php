@@ -10,133 +10,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="basic-styles.css">
     <link rel="stylesheet" href="class-styles.css">
-
-    <style>
-        .container {
-            display: flex;
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container {
-            flex: 1;
-            padding: 20px;
-        }
-
-        form {
-            width: 50%;
-        }
-
-        .form-container h2 {
-            margin-top: 0;
-        }
-
-        .form-container input[type="text"],
-        .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
-
-        .form-container input[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .navigation-bar {
-            flex: 0 0 200px;
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-        }
-
-        .navigation-bar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .navigation-bar ul li {
-            margin-bottom: 10px;
-        }
-
-        .navigation-bar ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-    </style>
 </head>
 
 <body>
-
     <header>
-
-        <div class="title-container">
+        <div class="heading-container">
             <h1>WELT</h1>
-            <h2 class="align-right"><a href="login.php">Login</a></h2>
         </div>
         <nav>
-            <ul class="ul">
-
+            <ul class="main-menu-ul">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
                 <li><a href="category.php?category=food">Food</a></li>
                 <li><a href="login.php">Administrator</a></li>
             </ul>
         </nav>
-
     </header>
 
-
-    <div class="container">
+    <section class="container-admin">
         <div class="form-container">
-            <h2>Modify Article</h2>
-            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <form method="post">
                 <label for="article_id">Article ID:</label>
                 <input type="text" name="article_id" id="article_id" required>
 
                 <label for="headline">Headline:</label>
                 <input type="text" name="headline" id="headline">
 
-                <label for="content">Content:</label>
-                <textarea name="content" id="content"></textarea>
+                <label for="summary">Summary:</label>
+                <textarea name="summary" id="summary"></textarea>
 
-                <label for="image">Image URL:</label>
-                <input type="text" name="image" id="image">
+                <label for="text">Text:</label>
+                <textarea name="text" id="text"></textarea>
 
-                <input type="checkbox" name="delete" id="delete">
-                <label for="delete">Delete article</label>
+                <label for="picture">Picture:</label>
+                <input type="file" name="picture" id="picture" required><br><br>
 
-                <input type="submit" name="submit" value="Submit">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date"><br><br>
+
+                <input type="submit" class="submit-button" name="submit" value="Submit">
+                <input type="submit" class="delete-button" name="delete" value="Delete">
+                <input type="submit" class="clear-button" name="clear" value="Clear">
+
             </form>
         </div>
 
         <div class="navigation-bar">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Articles</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#">Modify</a></li>
+                <li><a href="insert.php">Insert</a></li>
             </ul>
         </div>
-    </div>
+    </section>
+
+    <section>
+        <h2>Select Category:</h2>
+        <div>
+            <label for="category">Category:</label>
+            <select id="category" name="category" onchange="fetchArticles(this.value)">
+                <option value="All">All</option>
+                <option value="Politics">Politics</option>
+                <option value="Food">Food</option>
+            </select>
+        </div>
+    </section>
+
+    <h2 class="title">POLITICS</h2>
+    <section>
+        <?php
+        include 'connect.php';
+        define('UPLPATH', 'img/');
+
+        // Query to retrieve articles from the database
+        $sql = "SELECT id, title, summary, picture, date_published, category FROM test WHERE archive = 0 AND category = 'Politics' ORDER BY date_published LIMIT 4";
+
+        // Execute the query
+        $result = mysqli_query($dbc, $sql);
+
+        // Loop through the result set and display each article
+        if (mysqli_num_rows($result) > 0) {
+            $current_category = "";
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<article>";
+                echo "<label>";
+                echo "<input type='checkbox' name='article_checkbox' class='article-checkbox' onclick='setArticleId(this)' data-article-id='" . $row['id'] . "'>";
+                echo "<div class='image-container'>";
+                echo '<img src="' . UPLPATH . $row['picture'] . '">';
+                echo "</div>";
+                echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
+                echo "<p>" . $row["summary"] . "</p>";
+                echo "<p>Date: " . $row["date_published"] . "</p>";
+                echo "</label>";
+                echo "</article>";
+            }
+        } else {
+            echo "No articles found.";
+        }
+
+        // Close the database connection
+        mysqli_close($dbc);
+        ?>
+    </section>
 
     <footer>
-
         <h1>WELT</h1>
-
     </footer>
 
+    <script>
+        function setArticleId(checkbox) {
+            var articleIdInput = document.getElementById("article_id");
+            if (checkbox.checked) {
+                articleIdInput.value = checkbox.getAttribute("data-article-id");
+            } else {
+                articleIdInput.value = "";
+            }
+        }
 
-
+    </script>
 </body>
 
 </html>

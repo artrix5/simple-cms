@@ -17,10 +17,12 @@
 
     <header>
 
-        <h1>WELT</h1>
+        <div class="heading-container">
+            <h1>WELT</h1>
+        </div>
 
         <nav>
-            <ul class="ul">
+            <ul class="main-menu-ul">
 
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
@@ -31,63 +33,68 @@
 
     </header>
 
-    <?php
 
-    include 'connect.php';
-    define('UPLPATH', 'img/');
+    <div class="background">
 
-    $selectedCategory = $_GET['category'];
+        <?php
 
-    echo "<h2>" . strtoupper($selectedCategory) . "</h2>";
+        include 'connect.php';
+        define('UPLPATH', 'img/');
+
+        $selectedCategory = $_GET['category'];
+
+        echo "<h2 class=\"subheading\">" . strtoupper($selectedCategory) . "</h2>";
 
 
-    // Prepare the SQL query with a condition for the selected category
-    
-    $sql = "SELECT * FROM test WHERE category = '$selectedCategory'";
+        // Prepare the SQL query with a condition for the selected category
+        
+        $sql = "SELECT * FROM test WHERE category = '$selectedCategory'";
 
-    // Execute the query
-    $result = mysqli_query($dbc, $sql);
+        // Execute the query
+        $result = mysqli_query($dbc, $sql);
 
-    // Initialize a counter variable
-    $articleCount = 0;
+        // Initialize a counter variable
+        $articleCount = 0;
 
-    // Loop through the result set and display each article
-    if (mysqli_num_rows($result) > 0) {
-        echo "<section>";
-        while ($row = mysqli_fetch_assoc($result)) {
-            // Check if the current article count is a multiple of 4
-            if ($articleCount % 4 === 0 && $articleCount !== 0) {
-                echo "</section><section>"; // Start a new section
+        // Loop through the result set and display each article
+        if (mysqli_num_rows($result) > 0) {
+            echo "<section>";
+            while ($row = mysqli_fetch_assoc($result)) {
+                // Check if the current article count is a multiple of 4
+                if ($articleCount % 4 === 0 && $articleCount !== 0) {
+                    echo "</section><section>"; // Start a new section
+                }
+
+                echo "<article>";
+                echo "<div class=\"image-container\">";
+                echo '<img src="' . UPLPATH . $row['picture'] . '">';
+                echo "</div>";
+                echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["Title"] . "</a></h3>";
+                echo "<p>" . $row["Summary"] . "</p>";
+                echo "<p>Date: " . $row["date_published"] . "</p>";
+                echo "</article>";
+
+                $articleCount++;
             }
 
-            echo "<article>";
-            echo "<div class=\"image-container\">";
-            echo '<img src="' . UPLPATH . $row['picture'] . '">';
-            echo "</div>";
-            echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["Title"] . "</a></h3>";
-            echo "<p>" . $row["Summary"] . "</p>";
-            echo "<p>Date: " . $row["date_published"] . "</p>";
-            echo "</article>";
-
-            $articleCount++;
+            echo "</section>";
+        } else {
+            echo "No articles found.";
         }
 
-        echo "</section>";
-    } else {
-        echo "No articles found.";
-    }
+        // Close the database connection
+        mysqli_close($dbc);
+        ?>
+        </section>
 
-    // Close the database connection
-    mysqli_close($dbc);
-    ?>
-    </section>
-
+    </div>
 
     <footer>
 
         <h1>WELT</h1>
 
     </footer>
+
 
 </body>
 
