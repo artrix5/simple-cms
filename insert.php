@@ -21,7 +21,7 @@
 
 
     <nav>
-      <ul class="main-menu-ul">
+      <ul class="main-menu">
 
         <li><a href="index.php">Home</a></li>
         <li><a href="category.php?category=politics">Politics</a></li>
@@ -35,15 +35,19 @@
 
     <div class="form-container">
       <form enctype="multipart/form-data" name="input" action="script.php" method="POST">
+      <h2>Insert article:</h2>
 
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" placeholder="Enter a title" required>
+        <span id="errorTitle"></span></br>
 
         <label for="summary">Summary:</label>
         <textarea name="summary" id="summary" placeholder="Enter a summary" required></textarea>
+        <span id="errorSummary"></span></br>
 
         <label for="text">Text:</label>
         <textarea name="text" id="text" placeholder="Enter the text" required></textarea>
+        <span id="errorText"></span></br>
 
         <label for="category">Category:</label>
         <select name="category" id="category" required>
@@ -52,15 +56,17 @@
           <option value="Job and career">Job and career</option>
           <option value="Food">Food</option>
         </select>
+        <span id="errorCategory"></span></br>
 
         <label for="picture">Picture:</label>
         <input type="file" name="picture" id="picture" required>
+        <span id="errorPicture"></span></br></br>
 
         <label for="date">Enter a date:</label>
-        <input type="date" id="date" name="date">
+        <input type="date" id="date" name="date"></br></br>
 
         <label for="checkbox">Archive?</label>
-        <input type="checkbox" name="checkbox" id="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox"></br></br>
 
         <input type="submit" class="submit-button" id="submit" value="Send">
       </form>
@@ -72,7 +78,11 @@
         <li><a href="#">Insert</a></li>
       </ul>
     </div>
+
   </section>
+
+  <section>
+</section>
 
   <footer>
     <h1>WELT</h1>
@@ -92,8 +102,8 @@
       var errorTitle = document.getElementById("errorTitle");
       var errorSummary = document.getElementById("errorSummary");
       var errorText = document.getElementById("errorText");
-      var pictureError = document.getElementById("errorPicture");
-      var categoryError = document.getElementById("errorCategory");
+      var errorPicture = document.getElementById("errorPicture");
+      var errorCategory = document.getElementById("errorCategory");
 
 
       // Provjera naslova vijesti
@@ -132,8 +142,8 @@
       // Provjera odabrane slike
       if (picture === "") {
         document.getElementById("picture").style.border = "1px solid red";
-        pictureError.innerHTML = "The image must not be empty!<br>";
-        pictureError.style.color = "red";
+        errorPicture.innerHTML = "The image must not be empty!<br>";
+        errorPicture.style.color = "red";
 
         isValid = false;
       } else {
@@ -143,8 +153,8 @@
       // Provjera odabrane kategorije
       if (category === "") {
         document.getElementById("category").style.border = "1px solid red";
-        categoryError.innerHTML = "Category must not be empty!<br>";
-        categoryError.style.color = "red";
+        errorCategory.innerHTML = "Category must not be empty!<br>";
+        errorCategory.style.color = "red";
 
 
         isValid = false;

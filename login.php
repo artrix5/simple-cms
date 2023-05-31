@@ -19,7 +19,7 @@
             <h1>WELT</h1>
         </div>
         <nav>
-            <ul class="main-menu-ul">
+            <ul class="main-menu">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
                 <li><a href="category.php?category=food">Food</a></li>
@@ -28,7 +28,7 @@
         </nav>
     </header>
 
-
+<div class="background">
     <section>
         <div class="container-left">
             <div class="register-container">
@@ -50,6 +50,7 @@
             </form>
         </div>
     </section>
+</div>
 
     <footer>
         <h1>WELT</h1>

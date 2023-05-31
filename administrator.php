@@ -18,7 +18,7 @@
             <h1>WELT</h1>
         </div>
         <nav>
-            <ul class="main-menu-ul">
+            <ul class="main-menu">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
                 <li><a href="category.php?category=food">Food</a></li>
@@ -29,12 +29,13 @@
 
     <section class="container-admin">
         <div class="form-container">
-            <form method="post">
+            <form method="post" action="modify.php">
+                <h2>Modify article:</h2>
                 <label for="article_id">Article ID:</label>
                 <input type="text" name="article_id" id="article_id" required>
 
-                <label for="headline">Headline:</label>
-                <input type="text" name="headline" id="headline">
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title">
 
                 <label for="summary">Summary:</label>
                 <textarea name="summary" id="summary"></textarea>
@@ -43,12 +44,12 @@
                 <textarea name="text" id="text"></textarea>
 
                 <label for="picture">Picture:</label>
-                <input type="file" name="picture" id="picture" required><br><br>
+                <input type="file" name="picture" id="picture"><br><br>
 
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date"><br><br>
 
-                <input type="submit" class="submit-button" name="submit" value="Submit">
+                <input type="submit" class="update-button" name="update" value="Update">
                 <input type="submit" class="delete-button" name="delete" value="Delete">
                 <input type="submit" class="clear-button" name="clear" value="Clear">
 
@@ -64,52 +65,67 @@
     </section>
 
     <section>
-        <h2>Select Category:</h2>
-        <div>
-            <label for="category">Category:</label>
-            <select id="category" name="category" onchange="fetchArticles(this.value)">
-                <option value="All">All</option>
-                <option value="Politics">Politics</option>
-                <option value="Food">Food</option>
-            </select>
+        <div class="form-container">
+            <form method="POST">
+                <h2>Select Category:</h2>
+
+                <label for="category">Category:</label>
+                <select id="category" name="category">
+                    <option value="all">All</option>
+                    <option value="politics">Politics</option>
+                    <option value="food">Food</option>
+                </select>
+                <input type="submit" class="search-button" name="search" value="Search">
+
+            </form>
         </div>
     </section>
 
-    <h2 class="title">POLITICS</h2>
     <section>
         <?php
         include 'connect.php';
         define('UPLPATH', 'img/');
 
-        // Query to retrieve articles from the database
-        $sql = "SELECT id, title, summary, picture, date_published, category FROM test WHERE archive = 0 AND category = 'Politics' ORDER BY date_published LIMIT 4";
+        if (isset($_POST['category']) && isset($_POST['search'])) {
+            $category = $_POST['category'];
 
-        // Execute the query
-        $result = mysqli_query($dbc, $sql);
+            // Query to retrieve articles from the database
+            if ($category == "all") {
+                $sql = "SELECT id, title, summary, picture, date_published, category FROM test ORDER BY date_published LIMIT 4";
+            } else {
+                $sql = "SELECT id, title, summary, picture, date_published, category FROM test WHERE category = '$category' ORDER BY date_published";
+            }
 
-        // Loop through the result set and display each article
-        if (mysqli_num_rows($result) > 0) {
-            $current_category = "";
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<article>";
-                echo "<label>";
-                echo "<input type='checkbox' name='article_checkbox' class='article-checkbox' onclick='setArticleId(this)' data-article-id='" . $row['id'] . "'>";
-                echo "<div class='image-container'>";
-                echo '<img src="' . UPLPATH . $row['picture'] . '">';
-                echo "</div>";
-                echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
-                echo "<p>" . $row["summary"] . "</p>";
-                echo "<p>Date: " . $row["date_published"] . "</p>";
-                echo "</label>";
-                echo "</article>";
+            // Execute the query
+            $result = mysqli_query($dbc, $sql);
+
+            // Loop through the result set and display each article
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<article>";
+                    echo "<input type='radio' name='article_checkbox' class='article-checkbox' onclick='setArticleId(this)' data-article-id='" . $row['id'] . "'>";
+                    echo "<div class='image-container'>";
+                    echo '<img src="' . UPLPATH . $row['picture'] . '">';
+                    echo "</div>";
+                    echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
+                    echo "<p>" . $row["summary"] . "</p>";
+                    echo "<p>Date: " . $row["date_published"] . "</p>";
+                    echo "</article>";
+                }
+            } else {
+                echo "No articles found.";
             }
         } else {
-            echo "No articles found.";
+            echo "Search articles!";
         }
+
+
+
 
         // Close the database connection
         mysqli_close($dbc);
         ?>
+
     </section>
 
     <footer>
@@ -119,6 +135,12 @@
     <script>
         function setArticleId(checkbox) {
             var articleIdInput = document.getElementById("article_id");
+            var checkboxes = document.getElementsByClassName("article-checkbox");
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i] !== checkbox) {
+                    checkboxes[i].checked = false;
+                }
+            }
             if (checkbox.checked) {
                 articleIdInput.value = checkbox.getAttribute("data-article-id");
             } else {

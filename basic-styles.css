@@ -30,10 +30,6 @@ ul {
   flex-direction: row;
 }
 
-li {
-  padding: 10px;
-}
-
 li a {
   color: white;
   font-size: 20px;
@@ -59,17 +55,19 @@ a:active {
 
 section {
   width: 100%;
-  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background-color: white;
+  flex: 1;
   /* Update: Use flex: 1 to make the background div take up remaining space */
 }
+
+
 
 form {
   width: 100%;
   margin: 0 auto;
-  background-color: #f4f4f4;
   border-radius: 5px;
   padding: 30px;
   box-sizing: border-box;

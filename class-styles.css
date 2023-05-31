@@ -9,19 +9,32 @@
   object-fit: cover;
 }
 
+.image-container-article {
+  width: 100%;
+  overflow: hidden;
+}
 
-.main-menu-ul {
+.image-container-article img {
+  width: 75%;
+  height: auto;
+}
+
+
+.main-menu {
   margin: 0 0 0 10px;
   list-style: none;
   color: white;
   padding: 0;
 }
 
+.main-menu li {
+  padding: 10px;
+}
+
 .navigation-bar {
   flex: 0 0 200px;
   background-color: rgb(0, 58, 90);
   color: #fff;
-  padding: 20px;
   text-align: center;
 }
 
@@ -52,12 +65,16 @@
 .container-admin {
   display: flex;
   width: 100%;
-  background-color:rgb(7, 91, 138);
+  background-color: rgb(242, 242, 242);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 .submit-button {
+  background-color: rgb(50,205,50);
+  color: white;
+}
+
+.update-button {
   background-color: green;
   color: white;
 }
@@ -72,6 +89,11 @@
   color: white;
 }
 
+.search-button {
+  background-color: rgb(255,215,0);
+  color:black;
+}
+
 .form-container {
   flex: 1;
   padding: 20px;
@@ -82,7 +104,6 @@
 }
 
 .form-container input[type="submit"] {
-  color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -91,7 +112,8 @@
 
 .form-container input[type="text"],
 .form-container textarea,
-.form-container select {
+.form-container select,
+.form-container number {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -133,6 +155,7 @@
   background-image: url("img/texture5.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  min-height: 80vh;
 }
 
 .container-right {
@@ -145,6 +168,13 @@
   transition: background-image 0.5s;
   justify-content: center;
   align-items: center;
+  min-height: 80vh;
+}
+
+.container-middle {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcome-admin {
@@ -232,7 +262,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
   background-color: white;
 }
 

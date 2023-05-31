@@ -22,7 +22,7 @@
         </div>
 
         <nav>
-            <ul class="main-menu-ul">
+            <ul class="main-menu">
 
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
@@ -45,9 +45,9 @@
 
         echo "<h2 class=\"subheading\">" . strtoupper($selectedCategory) . "</h2>";
 
+        echo "<section>";
 
         // Prepare the SQL query with a condition for the selected category
-        
         $sql = "SELECT * FROM test WHERE category = '$selectedCategory'";
 
         // Execute the query
@@ -58,12 +58,12 @@
 
         // Loop through the result set and display each article
         if (mysqli_num_rows($result) > 0) {
-            echo "<section>";
+
             while ($row = mysqli_fetch_assoc($result)) {
                 // Check if the current article count is a multiple of 4
-                if ($articleCount % 4 === 0 && $articleCount !== 0) {
-                    echo "</section><section>"; // Start a new section
-                }
+               // if ($articleCount % 4 === 0 && $articleCount !== 0) {
+                //    echo "<section></section>"; // Start a new section
+                //}
 
                 echo "<article>";
                 echo "<div class=\"image-container\">";
@@ -77,7 +77,7 @@
                 $articleCount++;
             }
 
-            echo "</section>";
+            //echo "</section>";
         } else {
             echo "No articles found.";
         }
@@ -85,6 +85,7 @@
         // Close the database connection
         mysqli_close($dbc);
         ?>
+        
         </section>
 
     </div>

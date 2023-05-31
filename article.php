@@ -23,7 +23,7 @@
         </div>
 
         <nav>
-            <ul class="main-menu-ul">
+            <ul class="main-menu">
 
                 <li><a href="index.php">Home</a></li>
                 <li><a href="category.php?category=politics">Politics</a></li>
@@ -63,7 +63,7 @@
         echo "<div class='article-content'>";
         echo "<h2>" . $row["title"] . "</h2>";
         echo "<p>Date: " . $row["date_published"] . "</p>";
-        echo "<div class=\"img-container-article\">";
+        echo "<div class=\"image-container-article\">";
         echo "<img src='" . UPLPATH . $row["picture"] . "' alt='" . $row["title"] . "'>";
         echo "</div>";
         echo "<p>" . $row["content"] . "</p>";
