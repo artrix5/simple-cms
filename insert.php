@@ -65,7 +65,7 @@
         <label for="date">Enter a date:</label>
         <input type="date" id="date" name="date"></br></br>
 
-        <label for="checkbox">Archive?</label>
+        <label for="checkbox">Save to archive?</label>
         <input type="checkbox" name="checkbox" id="checkbox"></br></br>
 
         <input type="submit" class="submit-button" id="submit" value="Send">

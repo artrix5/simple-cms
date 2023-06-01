@@ -1,24 +1,32 @@
 <?php
-    session_start();
-    
-    $servername = "localhost:3306";
-    $user = "root";
-    $pass = "";
-    $db = "welt";
+session_start();
 
-    $dbc = mysqli_connect($servername, $user, $pass, $db) or die("Error" . mysqli_connect_error());
+$servername = "localhost:3306";
+$user = "root";
+$pass = "";
+$db = "welt";
 
-    if ($dbc) {
-        if (isset($_POST["submit"])) {
+$dbc = mysqli_connect($servername, $user, $pass, $db) or die("Error" . mysqli_connect_error());
 
-            $username = $_POST["username"];
-            $password = $_POST["password"];
+if ($dbc) {
+    if (isset($_POST["submit"])) {
 
-            $userSelect = "SELECT * FROM users WHERE username = '$username';";
-            $result = mysqli_query($dbc, $userSelect) or die("Error");
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+
+        $userSelect = "SELECT * FROM users WHERE username = ?";
+        //$result = mysqli_query($dbc, $userSelect) or die("Error");
+        //$row = mysqli_fetch_array($result);
+        //$level = $row['level'];
+
+        $stmt = mysqli_prepare($dbc, $userSelect);
+
+        if (mysqli_stmt_prepare($stmt, $userSelect)) {
+            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
             $row = mysqli_fetch_array($result);
             $level = $row['level'];
-
 
             if (password_verify($password, $row["password"])) {
                 $_SESSION["username"] = $username;
@@ -38,5 +46,6 @@
             }
         }
     }
-    mysqli_close($dbc);
-    ?>
+}
+mysqli_close($dbc);
+?>

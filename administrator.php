@@ -29,7 +29,7 @@
 
     <section class="container-admin">
         <div class="form-container">
-            <form method="post" action="modify.php">
+            <form id="article-form" enctype="multipart/form-data" method="post" action="modify.php">
                 <h2>Modify article:</h2>
                 <label for="article_id">Article ID:</label>
                 <input type="text" name="article_id" id="article_id" required>
@@ -51,7 +51,7 @@
 
                 <input type="submit" class="update-button" name="update" value="Update">
                 <input type="submit" class="delete-button" name="delete" value="Delete">
-                <input type="submit" class="clear-button" name="clear" value="Clear">
+                <input type="submit" class="clear-button" name="clear" value="Clear" onclick="clearForm()">
 
             </form>
         </div>
@@ -81,7 +81,7 @@
         </div>
     </section>
 
-    <section>
+    <div class="background">
         <?php
         include 'connect.php';
         define('UPLPATH', 'img/');
@@ -92,10 +92,13 @@
             // Query to retrieve articles from the database
             if ($category == "all") {
                 $sql = "SELECT id, title, summary, picture, date_published, category FROM test ORDER BY date_published LIMIT 4";
+                echo "<h2 class=\"subheading\">ALL</h2>";
             } else {
                 $sql = "SELECT id, title, summary, picture, date_published, category FROM test WHERE category = '$category' ORDER BY date_published";
+                echo "<h2 class=\"subheading\">" . strtoupper($category) . "</h2>";
             }
 
+            echo "<section>";
             // Execute the query
             $result = mysqli_query($dbc, $sql);
 
@@ -119,14 +122,12 @@
             echo "Search articles!";
         }
 
-
-
-
         // Close the database connection
         mysqli_close($dbc);
         ?>
 
-    </section>
+        </section>
+    </div>
 
     <footer>
         <h1>WELT</h1>
@@ -146,6 +147,10 @@
             } else {
                 articleIdInput.value = "";
             }
+        }
+
+        function clearForm() {
+            document.getElementById("article-form").reset();
         }
 
     </script>

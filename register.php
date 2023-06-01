@@ -48,11 +48,11 @@
                 <input type="submit" name="submit" value="Register">
 
                 <p class="center">Already have an account? <a class="login-link" href="login.php">Login here.</a>
-            </p>
+                </p>
 
             </form>
 
-           
+
 
         </div>
     </section>
@@ -72,20 +72,59 @@
             $password = $_POST["password"];
             $passwordCheck = $_POST["passwordCheck"];
             $hashPassword = password_hash($password, CRYPT_BLOWFISH);
-            $query = "SELECT username FROM users WHERE username = '$username';";
-            $result = mysqli_query($dbc, $query) or die("Error");
+            $query = "SELECT username FROM users WHERE username = ?";
+            //$result = mysqli_query($dbc, $query) or die("Error");
 
-            if (mysqli_num_rows($result) >= 1) {
-                echo "Username already exists!";
-            } else if ($password != $passwordCheck) {
+            /* Inicijalizira statement objekt nad konekcijom */
+            $stmt1 = mysqli_stmt_init($dbc);
+            /* Povezuje parametre statement objekt s upitom */
+            if (mysqli_stmt_prepare($stmt1, $query)) {
+                /* Povezuje parametre i njihove tipove s statement objektom */
+                mysqli_stmt_bind_param($stmt1, 's', $username);
+                /* Izvršava pripremljeni upit i pohranjuje rezultate */
+                mysqli_stmt_execute($stmt1);
+                mysqli_stmt_store_result($stmt1);
+            }
+            /* Povezuje atribute iz rezultata s varijablama */
+            mysqli_stmt_bind_result($stmt1, $a);
+            /* Dohvaća redak iz rezultata, i posprema vrijednosti atributa u varijable
+           navedene funkcijom mysqli_stmt_bind_result() */
+            mysqli_stmt_fetch($stmt1);
+
+            if (mysqli_stmt_num_rows($stmt1) > 0) {
+                echo ('Username already exists!');
+            }
+
+            //if (mysqli_num_rows($result) >= 1) {
+               // echo "Username already exists!";
+            //} 
+
+            else if ($password != $passwordCheck) {
                 echo "Passwords do not match!";
             } else {
-                $insertQuery = "INSERT INTO users (username, password, level) VALUES ('$username','$hashPassword', 0);";
-                $result = mysqli_query($dbc, $insertQuery) or die("Error");
 
-                if ($result === true) {
+                $sql = "INSERT INTO users (username, password, level) values (?, ?, 0)";
+                /* Inicijalizira statement objekt nad konekcijom */
+                $stmt = mysqli_stmt_init($dbc);
+                /* Povezuje parametre statement objekt s upitom */
+                if (mysqli_stmt_prepare($stmt, $sql)) {
+                    /* Povezuje parametre i njihove tipove s statement objektom */
+                    mysqli_stmt_bind_param($stmt, 'ss', $username, $hashPassword);
+                    /* Izvršava pripremljeni upit */
+                    mysqli_stmt_execute($stmt);
                     echo "Registration successful!";
+                    header("Location: administrator.php"); // Redirect to administrator.php
+                    exit(); // Terminate the current script
+
+                } else {
+                    echo "Error.";
                 }
+
+                //$insertQuery = "INSERT INTO users (username, password, level) VALUES ('$username','$hashPassword', 0);";
+                //
+                //if ($result === true) {
+                // echo "Registration successful!";
+                //}
             }
         }
     }

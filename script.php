@@ -20,12 +20,20 @@ if (isset($_POST['title']) && isset($_POST['summary']) && isset($_POST['text']) 
         $picture = '';
     }
 
+    // Prepare the statement
+    $stmt = mysqli_prepare($dbc, "INSERT INTO test (title, summary, content, category, picture, date_published, archive) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+    // Bind parameters to the statement
+    mysqli_stmt_bind_param($stmt, "ssssssi", $title, $summary, $text, $category, $picture, $date, $checkbox);
+
+    // Execute the prepared statement
+    $result = mysqli_stmt_execute($stmt);
 
     // Insert form data into database
-    $query = "INSERT INTO test (title, summary, content, category, picture, date_published, archive) 
+    /*$query = "INSERT INTO test (title, summary, content, category, picture, date_published, archive) 
           VALUES ('$title', '$summary', '$text', '$category', '$picture', '$date', '$checkbox')";
     $result = mysqli_query($dbc, $query) or die("Error" . mysqli_error($dbc));
-
+    */
     if ($result) {
         // Display success message
         echo "Form data successfully added to the database.";
