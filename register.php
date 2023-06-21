@@ -8,62 +8,41 @@
     <meta name="author" content="Adrian Lokner Lađević">
     <meta name="keywords" content="HTML, CSS, PHP">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="basic-styles.css">
-    <link rel="stylesheet" href="class-styles.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="register_validation.js" type="text/javascript" defer></script>
 
 </head>
 
 <body>
-    <header>
 
-        <div class="heading-container">
-            <h1>WELT</h1>
-        </div>
+    <?php include 'header.php'; ?>
 
-        <nav>
-            <ul class="main-menu">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="category.php?category=politics">Politics</a></li>
-                <li><a href="category.php?category=food">Food</a></li>
-                <li><a href="login.php">Administrator</a></li>
-            </ul>
-        </nav>
-    </header>
-
-
-    <section class="container-middle">
-        <div>
-            <form method="POST" class="login-form">
-                <h2 class="center">Register</h2>
+    <section>
+        <div class="container-register">
+            <form method="POST" class="register-form">
+                <h2 class="center">REGISTER</h2>
 
                 <label for="username">Username:</label>
-                <input type="text" name="username" id="username" required><br><br>
+                <input type="text" name="username" id="username" autocomplete="off" autofocus required><br>
+                <span id="errorUsername"></span>
 
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" required><br><br>
+                <input type="password" name="password" id="password" required><br>
+                <span id="errorPassword"></span>
 
                 <label for="passwordCheck">Repeat password:</label>
-                <input type="password" name="passwordCheck" id="passwordCheck" required><br><br>
+                <input type="password" name="passwordCheck" id="passwordCheck" required><br>
+                <span id="errorPasswordCheck"></span>
 
-                <input type="submit" name="submit" value="Register">
+                <input type="submit" name="submit" id="submit" value="Register">
 
                 <p class="center">Already have an account? <a class="login-link" href="login.php">Login here.</a>
                 </p>
-
             </form>
-
-
-
-        </div>
     </section>
 
     <?php
-    $servername = "localhost:3306";
-    $user = "root";
-    $pass = "";
-    $db = "welt";
-
-    $dbc = mysqli_connect($servername, $user, $pass, $db) or die("Error" . mysqli_connect_error());
+    include 'connect.php';
 
     if ($dbc) {
         if (isset($_POST["submit"])) {
@@ -71,60 +50,47 @@
             $username = $_POST["username"];
             $password = $_POST["password"];
             $passwordCheck = $_POST["passwordCheck"];
-            $hashPassword = password_hash($password, CRYPT_BLOWFISH);
+            $hashedPassword = password_hash($password, CRYPT_BLOWFISH);
+            $level = 0;
             $query = "SELECT username FROM users WHERE username = ?";
-            //$result = mysqli_query($dbc, $query) or die("Error");
 
-            /* Inicijalizira statement objekt nad konekcijom */
-            $stmt1 = mysqli_stmt_init($dbc);
-            /* Povezuje parametre statement objekt s upitom */
-            if (mysqli_stmt_prepare($stmt1, $query)) {
-                /* Povezuje parametre i njihove tipove s statement objektom */
-                mysqli_stmt_bind_param($stmt1, 's', $username);
-                /* Izvršava pripremljeni upit i pohranjuje rezultate */
-                mysqli_stmt_execute($stmt1);
-                mysqli_stmt_store_result($stmt1);
-            }
-            /* Povezuje atribute iz rezultata s varijablama */
-            mysqli_stmt_bind_result($stmt1, $a);
-            /* Dohvaća redak iz rezultata, i posprema vrijednosti atributa u varijable
-           navedene funkcijom mysqli_stmt_bind_result() */
-            mysqli_stmt_fetch($stmt1);
+            $stmt = mysqli_stmt_init($dbc);
 
-            if (mysqli_stmt_num_rows($stmt1) > 0) {
-                echo ('Username already exists!');
+            if (mysqli_stmt_prepare($stmt, $query)) {
+                mysqli_stmt_bind_param($stmt, 's', $username);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_store_result($stmt);
             }
 
-            //if (mysqli_num_rows($result) >= 1) {
-               // echo "Username already exists!";
-            //} 
+            mysqli_stmt_fetch($stmt);
 
-            else if ($password != $passwordCheck) {
-                echo "Passwords do not match!";
+            if (mysqli_stmt_num_rows($stmt) > 0) {
+                echo "<script type='text/javascript'>";
+                echo "document.getElementById('username').style.border = '1px solid red';";
+                echo "document.getElementById('errorUsername').innerHTML = 'Username already exists!';";
+                echo "document.getElementById('errorUsername').style.color = 'red';";
+                echo "</script>";
             } else {
 
-                $sql = "INSERT INTO users (username, password, level) values (?, ?, 0)";
-                /* Inicijalizira statement objekt nad konekcijom */
+                $query = "INSERT INTO users (username, password, level) values (?, ?, ?)";
                 $stmt = mysqli_stmt_init($dbc);
-                /* Povezuje parametre statement objekt s upitom */
-                if (mysqli_stmt_prepare($stmt, $sql)) {
-                    /* Povezuje parametre i njihove tipove s statement objektom */
-                    mysqli_stmt_bind_param($stmt, 'ss', $username, $hashPassword);
-                    /* Izvršava pripremljeni upit */
+
+                if (mysqli_stmt_prepare($stmt, $query)) {
+                    mysqli_stmt_bind_param($stmt, 'ssi', $username, $hashedPassword, $level);
                     mysqli_stmt_execute($stmt);
-                    echo "Registration successful!";
-                    header("Location: administrator.php"); // Redirect to administrator.php
-                    exit(); // Terminate the current script
+
+                    $_SESSION['username'] = $username;
+                    $_SESSION['level'] = $level;
+
+                    if (isset($_SESSION['username']) && isset($_SESSION['level'])) {
+
+                        header("location:index.php");
+                        exit();
+                    }
 
                 } else {
                     echo "Error.";
                 }
-
-                //$insertQuery = "INSERT INTO users (username, password, level) VALUES ('$username','$hashPassword', 0);";
-                //
-                //if ($result === true) {
-                // echo "Registration successful!";
-                //}
             }
         }
     }

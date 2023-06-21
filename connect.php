@@ -1,13 +1,10 @@
 <?php
-$serverName = "localhost:3306";
-$username = "root";
-$password = "";
+$server = "localhost";
+$user = "root";
+$pass = "";
 $db = "Welt";
-// Create connection
-$dbc = mysqli_connect($serverName, $username, $password, $db) or die('Error connecting to MySQL server.'); //.mysqli_error());
+
+$dbc = mysqli_connect($server, $user, $pass, $db) or die('Error connecting to MySQL server: ' . mysqli_connect_error());
 mysqli_set_charset($dbc, "utf8");
-// Check connection
-if ($dbc) {
-    //echo "Connected successfully";
-}
+
 ?>

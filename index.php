@@ -7,113 +7,104 @@
     <title>WELT</title>
     <meta name="description" content="PWA Project">
     <meta name="author" content="Adrian Lokner Lađević">
-    <meta name="keywords" content="HTML, CSS, PHP">
+    <meta name="keywords" content="HTML, CSS, PHP, Javascript">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="basic-styles.css">
-    <link rel="stylesheet" href="class-styles.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
 
-    <header>
+    <?php include 'header.php'; ?>
 
-        <div class="heading-container">
-            <h1>WELT</h1>
-        </div>
+    <h2 class="heading">POLITICS</h2>
 
-        <nav>
-                <ul class="main-menu">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="category.php?category=politics">Politics</a></li>
-                    <li><a href="category.php?category=food">Food</a></li>
-                    <li><a href="login.php">Administrator</a></li>
-                    <li><a href="insert.php">Insert</a></li>
-                    <li><a href="administrator.php">Admin</a></li>
-                </ul>
-        </nav>
+    <section>
+        <?php
+        include 'connect.php';
+        define('UPLPATH', 'images/');
 
-    </header>
+        $category = "Politics";
+        $archive = 0;
 
-    <div class="background">
+        $query = "SELECT id, title, summary, picture, date_published, category FROM test WHERE category = ? AND archive = ? ORDER BY date_published LIMIT 4;";
+        $stmt = mysqli_stmt_init($dbc);
 
-        <h2 class="subheading">POLITICS</h2>
+        if (mysqli_stmt_prepare($stmt, $query)) {
+            mysqli_stmt_bind_param($stmt, 'si', $category, $archive);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+        }
 
-        <section>
-            <?php
-            include 'connect.php';
-            define('UPLPATH', 'img/');
+        mysqli_stmt_bind_result($stmt, $id, $title, $summary, $image, $date_published, $category);
 
-            // Query to retrieve articles from the database
-            $sql = "SELECT id, title, summary, picture, date_published, category FROM test WHERE archive = 0 AND category = 'Politics' ORDER BY date_published LIMIT 4";
+        if (mysqli_stmt_num_rows($stmt) > 0) {
 
-            // Execute the query
-            $result = mysqli_query($dbc, $sql);
-
-            // Loop through the result set and display each article
-            if (mysqli_num_rows($result) > 0) {
-                $current_category = "";
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<article>";
-                    echo "<div class=\"image-container\">";
-                    echo '<img src="' . UPLPATH . $row['picture'] . '">';
-                    echo "</div>";
-                    echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
-                    echo "<p>" . $row["summary"] . "</p>";
-                    echo "<p>Date: " . $row["date_published"] . "</p>";
-                    echo "</article>";
-                }
-
-            } else {
-                echo "No articles found.";
+            while (mysqli_stmt_fetch($stmt)) {
+                echo "<article>";
+                echo "<div class=\"image-container\">";
+                echo '<img src="' . UPLPATH . $image . '">';
+                echo "</div>";
+                echo "<h3><a href='article.php?id=" . $id . "'>" . $title . "</a></h3>";
+                echo "<p>" . $summary . "</p>";
+                echo "<p>Date: " . $date_published . "</p>";
+                echo "</article>";
             }
 
-            // Close the database connection
-            mysqli_close($dbc);
-            ?>
-        </section>
+        } else {
+            echo "No articles found.";
+        }
 
-        <h2 class="subheading">FOOD</h2>
+        mysqli_stmt_close($stmt);
+        mysqli_close($dbc);
+        ?>
 
+    </section>
 
-        <section>
-            <?php
-            include 'connect.php';
+    <h2 class="heading">FOOD</h2>
 
-            // Query to retrieve articles from the database
-            $sql = "SELECT id, title, summary, picture, date_published, category FROM test WHERE archive = 0 AND category = 'Food' ORDER BY date_published LIMIT 4";
+    <section>
+        <?php
+        include 'connect.php';
 
-            // Execute the query
-            $result = mysqli_query($dbc, $sql);
+        $query = "SELECT id, title, summary, picture, date_published, category FROM test WHERE category = ? AND archive = ? ORDER BY date_published LIMIT 4;";
+        $stmt = mysqli_stmt_init($dbc);
 
-            // Loop through the result set and display each article
-            if (mysqli_num_rows($result) > 0) {
-                $current_category = "";
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<article>";
-                    echo "<div class=\"image-container\">";
-                    echo '<img src="' . UPLPATH . $row['picture'] . '">';
-                    echo "</div>";
-                    echo "<h3><a href='article.php?id=" . $row["id"] . "'>" . $row["title"] . "</a></h3>";
-                    echo "<p>" . $row["summary"] . "</p>";
-                    echo "<p>Date: " . $row["date_published"] . "</p>";
-                    echo "</article>";
-                }
+        $category = "Food";
+        $archive = 0;
 
+        if (mysqli_stmt_prepare($stmt, $query)) {
+            mysqli_stmt_bind_param($stmt, 'si', $category, $archive);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+        }
 
-            } else {
-                echo "No articles found.";
+        mysqli_stmt_bind_result($stmt, $id, $title, $summary, $image, $date_published, $category);
+
+        if (mysqli_stmt_num_rows($stmt) > 0) {
+            while (mysqli_stmt_fetch($stmt)) {
+                echo "<article>";
+                echo "<div class=\"image-container\">";
+                echo '<img src="' . UPLPATH . $image . '">';
+                echo "</div>";
+                echo "<h3><a href='article.php?id=" . $id . "'>" . $title . "</a></h3>";
+                echo "<p>" . $summary . "</p>";
+                echo "<p>Date: " . $date_published . "</p>";
+                echo "</article>";
             }
 
-            // Close the database connection
-            mysqli_close($dbc);
-            ?>
-        </section>
-    </div>
+        } else {
+            echo "No articles found.";
+        }
 
+        mysqli_stmt_close($stmt);
+        mysqli_close($dbc);
+        ?>
+
+    </section>
 
     <footer>
 
-        <h1 class="footer-title">WELT</h1>
+        <h1>WELT</h1>
 
     </footer>
 

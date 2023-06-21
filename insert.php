@@ -8,167 +8,137 @@
   <meta name="author" content="Adrian Lokner Lađević">
   <meta name="keywords" content="HTML, CSS, PHP">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="basic-styles.css">
-  <link rel="stylesheet" href="class-styles.css">
-
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="insert_validation.js" defer></script>
+  <script src="fetch_id.js" type="text/javascript" defer></script>
 </head>
 
 <body>
-  <header>
-    <div class="heading-container">
-      <h1>WELT</h1>
-    </div>
 
+  <?php include 'header.php'; ?>
 
-    <nav>
-      <ul class="main-menu">
-
-        <li><a href="index.php">Home</a></li>
-        <li><a href="category.php?category=politics">Politics</a></li>
-        <li><a href="category.php?category=food">Food</a></li>
-        <li><a href="login.php">Administrator</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <section class="container-admin">
+  <section>
 
     <div class="form-container">
-      <form enctype="multipart/form-data" name="input" action="script.php" method="POST">
-      <h2>Insert article:</h2>
+      <form id="insert-form" enctype="multipart/form-data" method="POST">
+        <h2>CREATE A NEW ARTICLE:</h2>
 
         <label for="title">Title:</label>
-        <input type="text" name="title" id="title" placeholder="Enter a title" required>
-        <span id="errorTitle"></span></br>
+        <input type="text" name="title" id="title">
+        <span id="errorTitle"></span>
 
         <label for="summary">Summary:</label>
-        <textarea name="summary" id="summary" placeholder="Enter a summary" required></textarea>
-        <span id="errorSummary"></span></br>
+        <textarea name="summary" id="summary"></textarea>
+        <span id="errorSummary"></span>
 
         <label for="text">Text:</label>
-        <textarea name="text" id="text" placeholder="Enter the text" required></textarea>
-        <span id="errorText"></span></br>
+        <textarea name="text" id="text"></textarea>
+        <span id="errorText"></span>
 
         <label for="category">Category:</label>
-        <select name="category" id="category" required>
+        <select name="category" id="category">
           <option value="">Select a category</option>
           <option value="Politics">Politics</option>
           <option value="Job and career">Job and career</option>
           <option value="Food">Food</option>
         </select>
-        <span id="errorCategory"></span></br>
+        <span id="errorCategory"></span>
 
-        <label for="picture">Picture:</label>
-        <input type="file" name="picture" id="picture" required>
-        <span id="errorPicture"></span></br></br>
-
-        <label for="date">Enter a date:</label>
-        <input type="date" id="date" name="date"></br></br>
+        <div>
+          <label for="image">Image:</label>
+          <input type="file" name="image" id="image">
+          <span id="errorImage"></span>
+          <label for="date">Enter a date:</label>
+          <input type="date" name="date" id="date">
+          <span id="errorDate"></span>
+        </div>
 
         <label for="checkbox">Save to archive?</label>
-        <input type="checkbox" name="checkbox" id="checkbox"></br></br>
+        <input type="checkbox" name="checkbox" id="checkbox">
 
-        <input type="submit" class="submit-button" id="submit" value="Send">
+        <div>
+          <input type="submit" class="insert-button" name="submit" id="submit" value="Create">
+          <input type="button" class="clear-button" value="Clear" onclick="clearForm('insert-form')">
+          <span id="messageSuccess"></span>
+        </div>
+
       </form>
     </div>
 
-    <div class="navigation-bar">
+    <aside class="navigation-bar">
       <ul>
-        <li><a href="administrator.php">Modify</a></li>
-        <li><a href="#">Insert</a></li>
+        <li><a href="administrator.php">MODIFY</a></li>
+        <li><a href="#">INSERT</a></li>
       </ul>
-    </div>
+    </aside>
 
   </section>
 
+  <hr>
+
+  <h2 class="heading">CREATED ARTICLE:</h2>
+
   <section>
-</section>
+
+    <?php
+
+    include 'connect.php';
+    define('UPLPATH', 'images/');
+
+    if (isset($_POST['submit'])) {
+
+      $title = $_POST['title'];
+      $summary = $_POST['summary'];
+      $text = $_POST['text'];
+      $category = $_POST['category'];
+      $date_published = $_POST['date'];
+
+      $archive = isset($_POST['checkbox']) ? 1 : 0;
+
+      if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $image = $_FILES['image']['name'];
+        $target_dir = 'images/' . $image;
+        move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
+      } else {
+        $image = '';
+      }
+
+      $query = "INSERT INTO test (title, summary, content, category, picture, date_published, archive) VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+      $stmt = mysqli_stmt_init($dbc);
+
+      if (mysqli_stmt_prepare($stmt, $query)) {
+
+        mysqli_stmt_bind_param($stmt, 'ssssssi', $title, $summary, $text, $category, $image, $date_published, $archive);
+
+        mysqli_stmt_execute($stmt);
+
+        echo "<script type='text/javascript'>";
+        echo "document.getElementById('messageSuccess').innerHTML = 'Article successfully created.';";
+        echo "document.getElementById('messageSuccess').style.setProperty('font-size', '20px');";
+        echo "document.getElementById('messageSuccess').style.color = 'green';";
+        echo "</script>";
+
+        echo "<article class=\"article-page\">";
+        echo "<h2>" . $title . "</h2>";
+        echo "<p>" . $summary . "</p>";
+        echo "<p>Date: " . $date_published . "</p>";
+        echo "<div class=\"article-image-container\">";
+        echo "<img src='" . UPLPATH . $image . "' alt='" . $title . "'>";
+        echo "</div>";
+        echo "<p>" . $text . "</p>";
+        echo "</article>";
+      }
+    }
+
+    mysqli_close($dbc);
+    ?>
+
+  </section>
 
   <footer>
     <h1>WELT</h1>
   </footer>
-
-  <script type="text/javascript">
-
-    document.getElementById("submit").onclick = function (event) {
-      var isValid = true;
-
-      var title = document.getElementById("title").value;
-      var summary = document.getElementById("summary").value;
-      var text = document.getElementById("text").value;
-      var picture = document.getElementById("picture").value;
-      var category = document.getElementById("category").value;
-
-      var errorTitle = document.getElementById("errorTitle");
-      var errorSummary = document.getElementById("errorSummary");
-      var errorText = document.getElementById("errorText");
-      var errorPicture = document.getElementById("errorPicture");
-      var errorCategory = document.getElementById("errorCategory");
-
-
-      // Provjera naslova vijesti
-      if (title.length < 5 || title.length > 30) {
-        document.getElementById("title").style.border = "1px solid red";
-        errorTitle.innerHTML = "Title must be between 5 and 30 characters long!<br>";
-        errorTitle.style.color = "red";
-
-        isValid = false;
-      } else {
-        errorTitle.style.border = "";
-      }
-
-      // Provjera kratkog sadržaja vijesti
-      if (summary.length < 10 || summary.length > 100) {
-        document.getElementById("summary").style.border = "1px solid red";
-        errorSummary.innerHTML = "The summary must have between 10 and 100 characters!<br>";
-        errorSummary.style.color = "red";
-
-        isValid = false;
-      } else {
-        document.getElementById("summary").style.border = "";
-      }
-
-      // Provjera teksta vijesti
-      if (text.length === 0) {
-        document.getElementById("text").style.border = "1px solid red";
-        errorText.innerHTML = "Text must not be empty!<br>";
-        errorText.style.color = "red";
-
-        isValid = false;
-      } else {
-        document.getElementById("text").style.border = "";
-      }
-
-      // Provjera odabrane slike
-      if (picture === "") {
-        document.getElementById("picture").style.border = "1px solid red";
-        errorPicture.innerHTML = "The image must not be empty!<br>";
-        errorPicture.style.color = "red";
-
-        isValid = false;
-      } else {
-        document.getElementById("picture").style.border = "";
-      }
-
-      // Provjera odabrane kategorije
-      if (category === "") {
-        document.getElementById("category").style.border = "1px solid red";
-        errorCategory.innerHTML = "Category must not be empty!<br>";
-        errorCategory.style.color = "red";
-
-
-        isValid = false;
-      } else {
-        document.getElementById("category").style.border = "";
-      }
-
-      if (isValid != true) {
-        event.preventDefault();
-      }
-
-    }
-
-  </script>
 
 </body>
 
