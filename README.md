@@ -21,4 +21,3 @@ For my specific task I had to create a simpler version of the website inspired b
 
 ![img4](https://github.com/Artrix555/PWA-Project/assets/110913178/95accdf9-d52a-44bc-8908-a97170491370)
 
-![img1](https://github.com/Artrix555/PWA-Project/assets/110913178/1586a8a8-26c5-4e60-87da-f4641d98c8da)
