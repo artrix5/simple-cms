@@ -8,9 +8,10 @@
     <meta name="author" content="Adrian Lokner Lađević">
     <meta name="keywords" content="HTML, CSS, PHP">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="fetch_id.js" type="text/javascript" defer></script>
-    <script src="modify_validation.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../javascript/fetch_id.js" type="text/javascript" defer></script>
+    <script src="../javascript/update_validation.js" type="text/javascript" defer></script>
+    <script src="../javascript/login_functions.js" type="text/javascript" defer></script>
 </head>
 
 <body>
@@ -20,7 +21,23 @@
     <section>
 
         <div class="form-container">
-            <form id="modify-form" action="modify.php" enctype="multipart/form-data" method="POST" >
+            <form id="modify-form" action="script.php" enctype="multipart/form-data" method="POST">
+
+                <?php
+
+                if (isset($_SESSION['username']) && isset($_SESSION['level'])) {
+
+                    $username = $_SESSION['username'];
+                    $level = $_SESSION['level'];
+
+                    if ($level == 1) {
+                        echo "<p class='green'>Welcome $username.</p>";
+                        echo "<p class='black'>You have administrator rights. </p>";
+                    }
+                }
+
+                ?>
+
                 <h2>MODIFY AN EXISTING ARTICLE:</h2>
                 <label for="article_id">Article ID:</label>
                 <input type="number" name="article_id" id="article_id" required>
@@ -47,15 +64,15 @@
                 <label for="checkbox">Save to archive?</label>
                 <input type="checkbox" name="checkbox" id="checkbox">
                 <div>
-                    <input type="submit" class="update-button" name="update"  id="update" value="Update">
-                    <input type="submit" class="delete-button" name="delete" value="Delete">
-                    <input type="button" class="clear-button" value="Clear" onclick="clearEverything('modify-form','article_checkbox')">
-
+                    <input type="submit" class="update-button" value="Update" name="update" id="update">
+                    <input type="submit" class="delete-button" value="Delete" name="delete" id="delete">
+                    <input type="button" class="clear-button" value="Clear" name="clear" id="clear"
+                        onclick="clearEverything('modify-form','article_checkbox')">
                 </div>
             </form>
         </div>
 
-        <aside class="navigation-bar">
+        <aside class="aside">
             <ul>
                 <li><a href="#">MODIFY</a></li>
                 <li><a href="insert.php">INSERT</a></li>
@@ -68,27 +85,27 @@
 
     <section>
 
-        <div class="form-container">
+        <div class="form-container-search">
             <form method="POST">
-                <h2>SELECT CATEGORY:</h2>
+                <h2>FIND AND SELECT ARTICLE ID:</h2>
                 <select id="category" name="category">
-                    <option value="politics">Politics</option>
-                    <option value="food">Food</option>
+                    <option class="bigger-text" value="politics">Politics</option>
+                    <option class="bigger-text" value="food">Food</option>
                 </select>
                 <input type="submit" class="search-button" name="search" value="Search">
-                <span id="error"></span>
             </form>
         </div>
     </section>
 
     <?php
     include 'connect.php';
-    define('UPLPATH', 'images/');
+    define('UPLPATH', '../images/');
 
     if (isset($_POST['category']) && isset($_POST['search'])) {
+
         $category = $_POST['category'];
 
-        $query = "SELECT id, title, summary, picture, date_published FROM test WHERE category = ? ORDER BY date_published;";
+        $query = "SELECT id, title, summary, picture, date_published FROM test WHERE category = ? ORDER BY date_published LIMIT 20;";
 
         $stmt = mysqli_stmt_init($dbc);
 
@@ -102,16 +119,14 @@
 
         $articleCount = 0;
 
+        echo "<section class='light-gray'>";
+
         if (mysqli_stmt_num_rows($stmt) > 0) {
-
-            echo "<h2 class=\"heading\">" . strtoupper($category) . "</h2>";
-
-            echo "<section>";
 
             while (mysqli_stmt_fetch($stmt)) {
 
                 if ($articleCount % 4 === 0 && $articleCount !== 0) {
-                    echo "</section><section>";
+                    echo "</section><section class='light-gray'>";
                 }
 
                 echo "<article>";
@@ -127,12 +142,10 @@
                 $articleCount++;
             }
         } else {
-            echo "<script type='text/javascript'>";
-            echo "document.getElementById('error').innerHTML = 'No articles found!';";
-            echo "document.getElementById('error').style.color = 'red';";
-            echo "</script>";
+            echo "<p class='red'>No articles found.</p>";
         }
 
+        mysqli_stmt_close($stmt);
     }
 
     mysqli_close($dbc);
@@ -140,9 +153,7 @@
 
     </section>
 
-    <footer>
-        <h1>WELT</h1>
-    </footer>
+    <?php include '../html/footer.html'; ?>
 
 </body>
 

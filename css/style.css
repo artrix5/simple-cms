@@ -1,27 +1,55 @@
 body {
-  margin: 0 auto;
-  padding: 0;
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
   background-color: rgb(249, 249, 248);
   min-height: 100vh;
+  justify-content: center;
 }
 
 * {
   box-sizing: border-box;
 }
 
-
-header {
+.header {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 8vh;
+  max-height: 8vh;
   background-color: rgb(0, 58, 90);
-  align-items: flex-start;
 }
 
-header * {
-  box-sizing: border-box;
+.header-left {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header-right {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header-right button {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.title {
+  color: white;
+  margin-left: 10px;
 }
 
 nav {
@@ -36,6 +64,7 @@ ul {
 li a {
   color: white;
   font-size: 20px;
+  font-weight: bold;
 }
 
 a {
@@ -60,10 +89,11 @@ section {
   width: 100%;
   display: flex;
   flex-direction: row;
+  /* Flex-start works as well */
   justify-content: center;
-  background-color: white;
   flex: 1;
-  /* Update: Use flex: 1 to make the background div take up remaining space */
+  background-color: white;
+  /* Use flex: 1 to make the background div take up remaining space */
 }
 
 form {
@@ -83,12 +113,11 @@ main {
 
 footer {
   width: 100%;
-  height: 100px;
   color: white;
   background-color: rgb(0, 58, 90);
   text-align: center;
   justify-content: center;
-  margin-top: auto;
+  line-height: 0.5;
 }
 
 article {
@@ -97,37 +126,32 @@ article {
 }
 
 span {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 hr {
   width: 100%;
+  height: 5px;
   border: 0;
   margin: 0;
-  display:block;
-  background-color:rgb(0, 58, 90);
-  height: 5px;
+  background-color: rgb(0, 58, 90);
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px;
-  color: white;
+footer hr {
+  height: 1px;
+  background-color: white;
 }
 
-.main-menu {
+.navigation-bar {
   margin: 0 0 0 10px;
   list-style: none;
   color: white;
   padding: 0;
 }
 
-.main-menu li {
+.navigation-bar li {
   padding: 10px;
 }
-
 
 .heading {
   font-size: 30px;
@@ -140,28 +164,31 @@ hr {
 
 .image-container {
   width: 100%;
-  height: auto;
   overflow: hidden;
 }
 
 .image-container img {
   width: 100%;
+  height: 350px;
   object-fit: cover;
 }
 
-.article-page {
-  margin: 0;
+.article-container {
+  width: 100%;
   text-align: center;
+  margin: 0;
 }
 
 .article-image-container {
-  width: 100%;
+  width: 50%;
+  margin: 0 auto;
+  object-fit: cover;
   overflow: hidden;
 }
 
 .article-image-container img {
-  width: 50%;
-  height: auto;
+  width: 100%;
+  object-fit: cover;
 }
 
 .bigger-text {
@@ -170,10 +197,10 @@ hr {
 
 .container-left {
   width: 30%;
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("backgrounds/city.jpg");
+  background-image: url("../images/city.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 80vh;
@@ -187,6 +214,7 @@ hr {
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
+
 .register-button {
   padding: 10px 20px;
   background-color: orange;
@@ -194,11 +222,11 @@ hr {
   border: none;
   cursor: pointer;
   font-size: 16px;
+  font-weight: bold;
   margin-bottom: 10px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  font-weight: bold;
 }
 
 .register-button:hover {
@@ -232,42 +260,28 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("backgrounds/abstract1.jpg");
+  background-image: url("../images/abstract1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 80vh;
 }
 
-.login-form {
+.login-form,
+.register-form {
   width: 30%;
   padding: 20px;
   background-color: #f2f2f2;
   border-radius: 5px;
+  line-height: 2.0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-family: "Roboto", sans-serif;
 }
-
-.register-form {
-  width: 25%;
-  padding: 20px;
-  font-weight: bold;
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: "Roboto", sans-serif;
-}
-
-.center {
-  text-align: center;
-}
-
 
 .login-form label,
 .register-form label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .login-form input[type="text"],
@@ -281,30 +295,56 @@ hr {
   margin-bottom: 15px;
 }
 
-.login-form input[type="submit"],
-.register-form input[type="submit"] {
+.login-form input[type="submit"] {
   width: 100%;
   padding: 10px;
-  background-color: #4caf50;
+  background-color: green;
   border: none;
   color: white;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 10px;
   margin-top: 15px;
 }
 
+.login-form input[type="submit"],
+.register-form input[type="submit"] {
+  display: block;
+  width: 50%;
+  padding: 10px;
+  background-color: darkblue;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 .login-form input[type="submit"]:hover,
 .register-form input[type="submit"]:hover {
-  background-color: #45a049;
+  background-color: blue;
 }
 
 .form-container {
-  flex:1;
+  width: 90%;
+  background-color: rgb(242, 242, 242);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 2.0;
+}
+
+
+.form-container-search {
+  width: 100%;
   background-color: rgb(242, 242, 242);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+.form-container-search h2,
 .form-container h2 {
   margin-top: 0;
   font-weight: bold;
@@ -313,6 +353,7 @@ hr {
 
 .form-container label {
   font-weight: bold;
+  font-family: 20px;
 }
 
 .form-container input[type="file"],
@@ -323,6 +364,7 @@ hr {
   margin-bottom: 15px;
 }
 
+.form-container-search input[type="submit"],
 .form-container input[type="submit"] {
   padding: 10px 20px;
   border: none;
@@ -330,6 +372,17 @@ hr {
   cursor: pointer;
   margin-top: 15px;
 }
+
+.form-container-search select {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+  resize: vertical;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 
 .form-container input[type="number"],
 .form-container input[type="text"],
@@ -344,7 +397,13 @@ hr {
   border-radius: 4px;
 }
 
-.navigation-bar {
+.form-container textarea {
+  height: 200px;
+}
+
+
+.aside {
+  width: 10%;
   background-color: rgb(0, 58, 90);
   color: #fff;
   text-align: center;
@@ -353,30 +412,26 @@ hr {
   padding: 0;
 }
 
-.navigation-bar ul {
+.aside ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  flex-direction: column;;
+  flex-direction: column;
 }
 
-.navigation-bar ul li {
+.aside ul li {
   margin: 0;
   padding: 0;
 }
 
-.navigation-bar ul li a {
+.aside ul li a {
   color: #fff;
   text-decoration: none;
-  display:block;
+  display: block;
   padding: 15px;
 }
 
-.navigation-bar li a.active {
-  background-color: orange;
-  color: white;
-}
-.navigation-bar ul li a:hover {
+.aside ul li a:hover {
   background-color: orange;
   color: white;
 }
@@ -384,7 +439,7 @@ hr {
 .login-link {
   color: #337ab7;
   text-decoration: none;
-  transition: color 0.3s ease-in-out; 
+  transition: color 0.3s ease-in-out;
 }
 
 .login-link:hover {
@@ -392,42 +447,16 @@ hr {
 }
 
 .login-link:focus {
-  outline: none; 
-  color: #23527c; 
+  outline: none;
+  color: #23527c;
 }
 
 .login-link:active {
-  color: #1a3b59; 
+  color: #1a3b59;
 }
 
 .login-link:visited {
-  color: #337ab7; 
-}
-
-.insert-button {
-  background-color: rgb(50,205,50);
-  color: white;
-}
-
-.update-button {
-  background-color: green;
-  color: white;
-}
-
-.delete-button {
-  background-color: red;
-  color: white;
-}
-
-.clear-button {
-  background-color: orange;
-  color: white;
-  border: none; 
-}
-
-.search-button {
-  background-color: rgb(255,215,0);
-  color:black;
+  color: #337ab7;
 }
 
 .insert-button,
@@ -441,64 +470,209 @@ hr {
   border-radius: 5px;
 }
 
+.insert-button,
+.update-button {
+  background-color: darkgreen;
+  color: white;
+}
+
 .insert-button:hover,
-.update-button:hover,
-.delete-button:hover,
-.clear-button:hover,
+.update-button:hover {
+  background-color: green;
+  font-weight: bold;
+}
+
+.delete-button {
+  background-color: darkred;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: red;
+  font-weight: bold;
+}
+
+.clear-button {
+  background-color: darkorange;
+  color: white;
+  border: none;
+}
+
+.clear-button:hover {
+  background-color: orange;
+  font-weight: bold;
+}
+
+.search-button {
+  background-color: gold;
+  color: black;
+}
+
 .search-button:hover {
-  filter: brightness(120%);
+  background-color: #ffdf00;
+  font-weight: bold;
+}
+
+.red,
+.green,
+.black,
+.white {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.black {
+  color: black;
+}
+
+.center {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.white {
+  color: white;
+}
+
+.middle {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  /* margin: auto - fix; */
+}
+
+.login-button,
+.logout-button {
+  width: 40%;
+  border: none;
+  font-weight: bold;
+  padding: 12px 24px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
 .login-button {
-  background-color: yellow;
-  border: none;
+  background-color: gold;
   color: black;
-  font-weight: bold;
-  padding: 12px 24px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 4px;
-  transition-duration: 0.4s;
-  cursor: pointer;
 }
 
 .login-button:hover {
-  background-color: gold;
+  background-color: yellow;
 }
 
 .logout-button {
-  background-color: red;
-  border: none;
+  background-color: darkred;
   color: white;
-  font-weight: bold;
-  padding: 12px 24px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 4px;
-  transition-duration: 0.4s;
-  cursor: pointer;
 }
 
 .logout-button:hover {
-  background-color: darkred;
+  background-color: red;
 }
 
-/* Add a media query for screens with a maximum width of 768px */
+.section-vertical {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(242, 242, 242);
+}
+
+.light-gray {
+  background-color: rgb(242, 242, 242);
+}
+
+@media (max-width: 1200px) {
+
+  .header-left {
+    width: 70%;
+  }
+
+  .header-right {
+    width: 30%;
+  }
+
+  .aside {
+    width: 20%;
+  }
+
+  .form-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 992px) {
+
+  body {
+    width: 90%;
+  }
+  /* CSS rules for screens with a width greater than or equal to 992px */
+  .header-left {
+    width: 60%;
+  }
+
+  .header-right {
+    width: 40%;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aside {
+    width: 100%;
+  }
+
+  .form-container{
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
+
+  /* CSS rules for screens with a width less than or equal to 768px */
   body {
     width: 100%;
     min-height: 100vh;
     padding: 0;
   }
 
-  header {
+  .header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 20vh;
+  }
+
+  .header-left {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .header-right {
+    width: 50%;
+    display: flex;
+    justify-content: center;
   }
 
   ul {
@@ -511,7 +685,6 @@ hr {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
   }
 
   li {
@@ -521,7 +694,7 @@ hr {
 
   section {
     width: 100%;
-    display:flex;
+    display: flex;
     flex-direction: column;
   }
 
@@ -529,12 +702,25 @@ hr {
     flex: 1 1 80%;
   }
 
-  footer {
-    height: 80px;
-  }
-
   hr {
     display: none;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+
+  .article-image-container {
+    width: 90%;
+  }
+
+  .article-image-container img {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .aside {
+    width: 100%;
   }
 
   .container-left,
@@ -548,5 +734,10 @@ hr {
 
   .register-form {
     width: 70%;
+  }
+
+  .title {
+    color: white;
+    margin-left: 0px;
   }
 }

@@ -24,7 +24,8 @@
 
         isValid = false;
       } else {
-        errorTitle.style.border = "";
+        errorTitle.innerHTML = "";
+        document.getElementById("title").style.border = "1px solid green";
       }
 
       if (summary.length < 10 || summary.length > 100) {
@@ -34,7 +35,8 @@
 
         isValid = false;
       } else {
-        document.getElementById("summary").style.border = "";
+        errorSummary.innerHTML = "";
+        document.getElementById("summary").style.border = "1px solid green";
       }
 
       if (text === "") {
@@ -44,7 +46,8 @@
 
         isValid = false;
       } else {
-        document.getElementById("text").style.border = "";
+        errorText.innerHTML = "";
+        document.getElementById("text").style.border = "1px solid green";
       }
 
       if (image === "") {
@@ -54,7 +57,8 @@
 
         isValid = false;
       } else {
-        document.getElementById("image").style.border = "";
+        errorImage.innerHTML = "";
+        document.getElementById("image").style.border = "1px solid green";
       }
 
       if (date === "") {
@@ -64,7 +68,8 @@
 
         isValid = false;
       } else {
-        document.getElementById("date").style.border = "";
+        errorDate.innerHTML = "";
+        document.getElementById("date").style.border = "1px solid green";
       }
 
       if (category === "") {
@@ -74,7 +79,8 @@
 
         isValid = false;
       } else {
-        document.getElementById("category").style.border = "";
+        errorCategory.innerHTML = "";
+        document.getElementById("category").style.border = "1px solid green";
       }
 
       if (isValid != true) {
