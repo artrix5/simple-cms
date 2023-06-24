@@ -51,21 +51,20 @@
                         $level = 0;
                         $query = "SELECT username FROM users WHERE username = ?";
 
-                        $stmt = mysqli_stmt_init($dbc);
+                        $stmtSearch = mysqli_stmt_init($dbc);
 
-                        if (mysqli_stmt_prepare($stmt, $query)) {
-                            mysqli_stmt_bind_param($stmt, 's', $username);
-                            mysqli_stmt_execute($stmt);
-                            mysqli_stmt_store_result($stmt);
+                        if (mysqli_stmt_prepare($stmtSearch, $query)) {
+                            mysqli_stmt_bind_param($stmtSearch, 's', $username);
+                            mysqli_stmt_execute($stmtSearch);
+                            mysqli_stmt_store_result($stmtSearch);
                         }
 
-                        mysqli_stmt_fetch($stmt);
+                        mysqli_stmt_fetch($stmtSearch);
 
-                        if (mysqli_stmt_num_rows($stmt) > 0) {
+                        if (mysqli_stmt_num_rows($stmtSearch) > 0) {
                             echo "<p class='red'>The username is already taken.</p>";
-                            mysqli_stmt_close($stmt);
                         } else {
-
+                            mysqli_stmt_close($stmtSearch);
                             $query = "INSERT INTO users (username, password, level) values (?, ?, ?)";
                             $stmt = mysqli_stmt_init($dbc);
 
@@ -86,10 +85,11 @@
                                 }
 
                             } else {
+                                mysqli_stmt_close($stmt);
                                 echo "<p class='red'>Error.</p>";
                             }
                         }
-                        mysqli_stmt_close($stmt);
+                        mysqli_stmt_close($stmtSearch);
                     }
                 }
                 mysqli_close($dbc);

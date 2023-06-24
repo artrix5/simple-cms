@@ -174,13 +174,13 @@ footer hr {
 }
 
 .article-container {
-  width: 100%;
+  width: 80%;
   text-align: center;
   margin: 0;
 }
 
 .article-image-container {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   object-fit: cover;
   overflow: hidden;
@@ -592,6 +592,9 @@ footer hr {
 .section-vertical {
   display: flex;
   flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(242, 242, 242);
 }
 

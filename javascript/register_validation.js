@@ -19,9 +19,9 @@ document.getElementById("submit").onclick = function (event) {
         isValid = false;
     }
 
-    else if ((username.length < 5 || username.length > 10) && username.trim() != "") {
+    else if ((username.length < 4 || username.length > 10) && username.trim() != "") {
         document.getElementById("username").style.border = "1px solid red";
-        errorUsername.innerHTML = "Username must be between 5 and 10 characters long!<br>";
+        errorUsername.innerHTML = "Username must be between 4 and 10 characters long!<br>";
         errorUsername.style.color = "red";
 
         isValid = false;
@@ -40,9 +40,9 @@ document.getElementById("submit").onclick = function (event) {
         isValid = false;
     }
 
-    else if ((password.length < 5 || password.length > 10) && password.trim() != "") {
+    else if ((password.length < 4 || password.length > 10) && password.trim() != "") {
         document.getElementById("password").style.border = "1px solid red";
-        errorPassword.innerHTML = "Password must be between 5 and 15 characters long!<br>";
+        errorPassword.innerHTML = "Password must be between 4 and 15 characters long!<br>";
         errorPassword.style.color = "red";
 
         isValid = false;
