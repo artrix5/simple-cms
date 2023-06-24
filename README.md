@@ -1,7 +1,22 @@
 # PWA-Project
 A project for Programming Web Applications class.
 
+Technologies:
+HTML
+CSS
+JS
+PHP
+SQL
+
 A website where you can create, update, delete and view articles.
 For my specific task I had to create a simpler version of the website inspired by "Welt".
 
-![image](https://github.com/Artrix555/QuizProject/assets/110913178/112b5375-cbf8-49c7-bfbe-dc51ee4cda11)
+![img5](https://github.com/Artrix555/PWA-Project/assets/110913178/b7031634-7ace-4507-a6ea-b9ac6f44891f)
+
+![im2](https://github.com/Artrix555/PWA-Project/assets/110913178/fbe9f65d-537d-4a55-9ef6-6673c13112a7)
+
+![img3](https://github.com/Artrix555/PWA-Project/assets/110913178/b0c5ad6b-c811-43a7-a271-76f832a81973)
+
+![img4](https://github.com/Artrix555/PWA-Project/assets/110913178/95accdf9-d52a-44bc-8908-a97170491370)
+
+![img1](https://github.com/Artrix555/PWA-Project/assets/110913178/1586a8a8-26c5-4e60-87da-f4641d98c8da)
