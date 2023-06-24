@@ -1,7 +1,7 @@
 # PWA-Project
-A project for Programming Web Applications class.
+<h1>A project for Programming Web Applications class.</h1>
 <hr>
-Technologies:
+<h2>Technologies:</h2>
 <ul>
 <li>HTML</li>
 <li>CSS</li>
