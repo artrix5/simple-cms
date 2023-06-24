@@ -2,11 +2,13 @@
 A project for Programming Web Applications class.
 
 Technologies:
-HTML
-CSS
-JS
-PHP
-SQL
+<ul>
+<li>HTML</li>
+<li>CSS</li>
+<li>Javascript</li>
+<li>PHP</li>
+<li>SQL</li>
+</ul>
 
 A website where you can create, update, delete and view articles.
 For my specific task I had to create a simpler version of the website inspired by "Welt".
