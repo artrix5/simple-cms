@@ -1,7 +1,6 @@
-# PWA-Project
-<h1>A project for Programming Web Applications class.</h1>
-<hr>
-<h2>Technologies:</h2>
+# CMS Website Project
+This project is a content management system (CMS) website built using:
+
 <ul>
 <li>HTML</li>
 <li>CSS</li>
@@ -10,14 +9,10 @@
 <li>SQL</li>
 </ul>
 
-A website where you can create, update, delete and view articles.
-For my specific task I had to create a simpler version of the website inspired by "Welt".
+The website allows users to create, update, delete, and view articles, providing a foundational experience in CMS functionality. For this specific task, I developed a streamlined version inspired by the "Welt" website, focusing on essential content management features and user experience.
 
 ![img5](https://github.com/Artrix555/PWA-Project/assets/110913178/b7031634-7ace-4507-a6ea-b9ac6f44891f)
 
-![im2](https://github.com/Artrix555/PWA-Project/assets/110913178/fbe9f65d-537d-4a55-9ef6-6673c13112a7)
+![248502347-fbe9f65d-537d-4a55-9ef6-6673c13112a7](https://github.com/user-attachments/assets/d71eaeaa-b313-465b-a1da-daf3b3b5921f)
 
-![img3](https://github.com/Artrix555/PWA-Project/assets/110913178/b0c5ad6b-c811-43a7-a271-76f832a81973)
-
-![img4](https://github.com/Artrix555/PWA-Project/assets/110913178/95accdf9-d52a-44bc-8908-a97170491370)
 
